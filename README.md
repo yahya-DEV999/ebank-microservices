@@ -40,3 +40,13 @@ OpenFeign · Resilience4J · Spring Cloud Gateway · Eureka · Swagger (springdo
 
 Test : http://localhost:8081/api/customers — Swagger : http://localhost:8081/swagger-ui.html
 
+## Étape 2 – Micro-service `ebank-service`
+- Entité `BankAccount` : `accountId` (UUID), `balance`, `createdAt`, `currency`, `type`
+  (enum `AccountType` : `CURRENT_ACCOUNT` / `SAVING_ACCOUNT`) et `customerId`.
+- Chaque micro-service a **sa propre base** : ebank-service ne stocke que l'identifiant du client.
+- `BankAccountRestController` : `GET /api/accounts`, `GET /api/accounts/{id}`,
+  `GET /api/customers/{customerId}/accounts`.
+- Deux comptes (courant + épargne) créés pour chacun des clients 1 à 3.
+
+Test : http://localhost:8082/api/accounts — Swagger : http://localhost:8082/swagger-ui.html
+
