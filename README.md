@@ -50,3 +50,14 @@ Test : http://localhost:8081/api/customers — Swagger : http://localhost:8081/s
 
 Test : http://localhost:8082/api/accounts — Swagger : http://localhost:8082/swagger-ui.html
 
+## Étape 3 – Communication entre les services avec OpenFeign
+- Dépendance `spring-cloud-starter-openfeign` + `@EnableFeignClients`.
+- `model/Customer` : simple classe (pas une entité) qui reçoit les données du client.
+- `clients/CustomerRestClient` : interface `@FeignClient` ; Spring génère le client HTTP qui
+  appelle `GET /api/customers/{id}` sur customer-service.
+- `BankAccount.customer` est `@Transient` : il n'est pas stocké, il est rempli à chaque requête
+  par le contrôleur.
+
+Test (les deux services lancés) : http://localhost:8082/api/accounts → chaque compte contient
+maintenant l'objet `customer`.
+
