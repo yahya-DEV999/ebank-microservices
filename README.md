@@ -72,3 +72,11 @@ maintenant l'objet `customer`.
 
 Test : arrêter customer-service puis appeler http://localhost:8082/api/accounts.
 
+## Étape 5 – API Gateway (`gateway-service`)
+- Spring Cloud Gateway (WebFlux) sur le port **8888** : point d'entrée unique des clients.
+- Routes statiques dans `application.yml` :
+  - `/api/customers/**` → http://localhost:8081
+  - `/api/accounts/**` → http://localhost:8082
+
+Test : http://localhost:8888/api/customers et http://localhost:8888/api/accounts
+
