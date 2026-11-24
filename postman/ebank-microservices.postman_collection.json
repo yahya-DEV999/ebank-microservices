@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "ebank-microservices - Partie 1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gateway",
+      "value": "http://localhost:8888"
+    },
+    {
+      "key": "customer",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "ebank",
+      "value": "http://localhost:8082"
+    }
+  ],
+  "item": [
+    {
+      "name": "customer-service (direct)",
+      "item": [
+        {
+          "name": "Liste des clients",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer}}/api/customers"
+            }
+          }
+        },
+        {
+          "name": "Client par id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer}}/api/customers/1"
+            }
+          }
+        },
+        {
+          "name": "Ajouter un client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{customer}}/api/customers"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Sara\",\n  \"lastName\": \"Idrissi\",\n  \"email\": \"sara@gmail.com\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ebank-service (direct)",
+      "item": [
+        {
+          "name": "Liste des comptes (avec client via Feign)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ebank}}/api/accounts"
+            }
+          }
+        },
+        {
+          "name": "Comptes d'un client",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ebank}}/api/customers/1/accounts"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Via la gateway",
+      "item": [
+        {
+          "name": "Clients (route statique)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/customers"
+            }
+          }
+        },
+        {
+          "name": "Comptes (route statique)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/accounts"
+            }
+          }
+        },
+        {
+          "name": "Clients (route dynamique Eureka)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/customer-service/api/customers"
+            }
+          }
+        },
+        {
+          "name": "Comptes (route dynamique Eureka)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/ebank-service/api/accounts"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -93,3 +93,30 @@ Tableau de bord Eureka : http://localhost:8761
 
 **Ordre de démarrage :** discovery-service → customer-service → ebank-service → gateway-service.
 
+## Étape 7 – Tests des services backend (Postman et Swagger UI)
+
+### Swagger UI
+- customer-service : http://localhost:8081/swagger-ui.html
+- ebank-service : http://localhost:8082/swagger-ui.html
+
+### Postman
+Importer `postman/ebank-microservices.postman_collection.json` (File → Import). La collection
+contient les appels directs aux services et les appels via la gateway (routes statiques et
+dynamiques).
+
+### Scénarios testés
+| Test | Requête | Résultat attendu |
+|---|---|---|
+| Liste des clients | `GET :8888/api/customers` | 3 clients |
+| Comptes avec client | `GET :8888/api/accounts` | 6 comptes, chacun avec son `customer` |
+| Comptes d'un client | `GET :8082/api/customers/1/accounts` | 2 comptes du client 1 |
+| Route dynamique | `GET :8888/customer-service/api/customers` | 3 clients |
+| Circuit breaker | arrêter customer-service puis `GET :8888/api/accounts` | comptes avec client « Not available » |
+| Eureka | http://localhost:8761 | CUSTOMER-SERVICE, EBANK-SERVICE, GATEWAY-SERVICE enregistrés |
+
+## Lancer le projet
+1. IntelliJ → File → Open → dossier `ebank-microservices` (le `pom.xml` racine importe les 4 modules).
+2. Lancer dans l'ordre : `DiscoveryServiceApplication`, `CustomerServiceApplication`,
+   `EbankServiceApplication`, `GatewayServiceApplication`.
+3. Vérifier l'enregistrement sur http://localhost:8761 puis tester via la gateway (port 8888).
+
