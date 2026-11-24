@@ -61,3 +61,14 @@ Test : http://localhost:8082/api/accounts — Swagger : http://localhost:8082/sw
 Test (les deux services lancés) : http://localhost:8082/api/accounts → chaque compte contient
 maintenant l'objet `customer`.
 
+## Étape 4 – Fault tolerance avec Circuit Breaker (Resilience4J)
+- Dépendance `spring-cloud-starter-circuitbreaker-resilience4j` et
+  `spring.cloud.openfeign.circuitbreaker.enabled=true`.
+- `CustomerRestClientFallback` : implémentation de secours déclarée dans `@FeignClient(fallback = …)`.
+  Si customer-service est arrêté ou trop lent, le compte est renvoyé avec un client
+  « Not available » au lieu d'une erreur 500.
+- Réglages : fenêtre de 10 appels, ouverture du circuit à 50 % d'échecs, 10 s en état ouvert,
+  timeout de 3 s.
+
+Test : arrêter customer-service puis appeler http://localhost:8082/api/accounts.
+
