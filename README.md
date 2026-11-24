@@ -38,7 +38,7 @@ OpenFeign · Resilience4J · Spring Cloud Gateway · Eureka · Swagger (springdo
 - `CustomerRestController` : `GET /api/customers`, `GET /api/customers/{id}`, `POST /api/customers`.
 - Trois clients insérés au démarrage par un `CommandLineRunner`.
 
-Test : http://localhost:8081/api/customers — Swagger : http://localhost:8081/swagger-ui.html
+Test : http://localhost:8081/api/customers
 
 ## Étape 2 – Micro-service `ebank-service`
 - Entité `BankAccount` : `accountId` (UUID), `balance`, `createdAt`, `currency`, `type`
@@ -48,7 +48,7 @@ Test : http://localhost:8081/api/customers — Swagger : http://localhost:8081/s
   `GET /api/customers/{customerId}/accounts`.
 - Deux comptes (courant + épargne) créés pour chacun des clients 1 à 3.
 
-Test : http://localhost:8082/api/accounts — Swagger : http://localhost:8082/swagger-ui.html
+Test : http://localhost:8082/api/accounts 
 
 ## Étape 3 – Communication entre les services avec OpenFeign
 - Dépendance `spring-cloud-starter-openfeign` + `@EnableFeignClients`.
@@ -94,10 +94,6 @@ Tableau de bord Eureka : http://localhost:8761
 **Ordre de démarrage :** discovery-service → customer-service → ebank-service → gateway-service.
 
 ## Étape 7 – Tests des services backend (Postman et Swagger UI)
-
-### Swagger UI
-- customer-service : http://localhost:8081/swagger-ui.html
-- ebank-service : http://localhost:8082/swagger-ui.html
 
 ### Postman
 Importer `postman/ebank-microservices.postman_collection.json` (File → Import). La collection
