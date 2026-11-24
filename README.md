@@ -80,3 +80,16 @@ Test : arrêter customer-service puis appeler http://localhost:8082/api/accounts
 
 Test : http://localhost:8888/api/customers et http://localhost:8888/api/accounts
 
+## Étape 6 – Discovery Service (Eureka)
+- `discovery-service` : serveur Eureka (`@EnableEurekaServer`) sur le port **8761**.
+- customer-service, ebank-service et gateway-service deviennent clients Eureka
+  (`spring-cloud-starter-netflix-eureka-client`) et s'enregistrent au démarrage.
+- OpenFeign utilise maintenant le **nom** `CUSTOMER-SERVICE` au lieu d'une adresse en dur.
+- Gateway : routes `lb://CUSTOMER-SERVICE` et `lb://EBANK-SERVICE` (load balancing) et
+  routes dynamiques activées (`discovery.locator`) :
+  http://localhost:8888/customer-service/api/customers
+
+Tableau de bord Eureka : http://localhost:8761
+
+**Ordre de démarrage :** discovery-service → customer-service → ebank-service → gateway-service.
+

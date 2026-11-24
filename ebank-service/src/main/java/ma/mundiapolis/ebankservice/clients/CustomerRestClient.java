@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // Client REST déclaratif : Spring génère l'implémentation qui appelle customer-service
-@FeignClient(name = "customer-service", url = "${customer-service.url}",
-        fallback = CustomerRestClientFallback.class)
+// Le nom CUSTOMER-SERVICE est résolu par Eureka (plus d'adresse en dur)
+@FeignClient(name = "CUSTOMER-SERVICE", fallback = CustomerRestClientFallback.class)
 public interface CustomerRestClient {
 
     @GetMapping("/api/customers/{id}")
